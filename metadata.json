@@ -1,0 +1,6 @@
+{
+  "name": "Platform_Admin_Jharkhand",
+  "description": "Platform Administration & AI Governance for the Jharkhand Societal Innovation Platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
