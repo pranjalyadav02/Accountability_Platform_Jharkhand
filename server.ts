@@ -6,10 +6,15 @@ import adminRouter from "./src/apps/admin/routes";
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3006;
 
   app.use(cors());
   app.use(express.json());
+
+  // Health check
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok", portal: "Accountability_Platform_Jharkhand", port: PORT, timestamp: new Date() });
+  });
 
   // Mount modular Monolith API
   app.use("/api/v1/admin", adminRouter);
@@ -30,7 +35,7 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`[Accountability_Platform_Jharkhand] Server running on http://localhost:${PORT}`);
   });
 }
 
