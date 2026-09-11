@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   ShieldAlert, Activity, Users, Settings, Database, 
   LayoutDashboard, Server, Search, Bell, LogOut, Hexagon,
-  FileText, ShieldCheck, Cpu, LocateFixed, Clock
+  FileText, ShieldCheck, Cpu, LocateFixed, Clock, Languages
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { CommandCenter } from './views/CommandCenter';
@@ -15,6 +15,8 @@ export type TabType = 'command' | 'users' | 'ai' | 'workflow' | 'geography' | 'i
 
 export function AppShell() {
   const [activeTab, setActiveTab] = useState<TabType>('command');
+  const [isHindi, setIsHindi] = useState(false);
+  const t = (en: string, hi: string) => isHindi ? hi : en;
 
   const renderContent = () => {
     switch (activeTab) {
@@ -55,8 +57,8 @@ export function AppShell() {
         <div className="h-16 flex items-center px-6 border-b border-slate-800 shrink-0 bg-slate-950">
           <ShieldCheck className="w-6 h-6 text-emerald-500 mr-3" />
           <div>
-            <h1 className="text-sm font-bold text-white tracking-wide">JSIP</h1>
-            <p className="text-[10px] text-slate-400 uppercase tracking-widest">Platform Admin</p>
+            <h1 className="text-sm font-bold text-white tracking-wide">JanaSamadhan</h1>
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest">{t('Accountability Center', 'जवाबदेही केंद्र')}</p>
           </div>
         </div>
 
@@ -105,7 +107,7 @@ export function AppShell() {
         {/* Header */}
         <header className="h-16 shrink-0 bg-white border-b border-slate-200 flex items-center justify-between px-8 z-10 shadow-sm">
           <div className="flex items-center text-lg font-serif font-medium text-slate-800">
-            Platform Governance Center
+            {t('Platform Accountability Center', 'प्लेटफ़ॉर्म जवाबदेही केंद्र')}
           </div>
           
           <div className="flex items-center space-x-6">
@@ -119,6 +121,16 @@ export function AppShell() {
             </div>
             
             <div className="flex items-center space-x-4 border-l border-slate-200 pl-6">
+              {/* Hindi Toggle */}
+              <button
+                onClick={() => setIsHindi(!isHindi)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs font-semibold transition-colors"
+                title={isHindi ? 'Switch to English' : 'हिंदी में देखें'}
+              >
+                <Languages className="w-3.5 h-3.5" />
+                {isHindi ? 'EN' : 'हि'}
+              </button>
+
               <button className="relative text-slate-500 hover:text-slate-700">
                 <Bell className="w-5 h-5" />
                 <span className="absolute 1 top-0 right-0 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
@@ -129,8 +141,8 @@ export function AppShell() {
                   AD
                 </div>
                 <div className="hidden md:block text-sm">
-                  <p className="font-medium text-slate-900 leading-none">Super Admin</p>
-                  <p className="text-slate-500 text-xs mt-1">State Level</p>
+                  <p className="font-medium text-slate-900 leading-none">{t('Super Admin', 'सुपर व्यवस्थापक')}</p>
+                  <p className="text-slate-500 text-xs mt-1">{t('State Level', 'राज्य स्तर')}</p>
                 </div>
               </div>
             </div>

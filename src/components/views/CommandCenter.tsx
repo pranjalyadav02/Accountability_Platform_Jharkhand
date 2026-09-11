@@ -1,12 +1,12 @@
 import React from 'react';
 import { 
   Users, Building, Target, FileCheck, CheckCircle2, 
-  Activity, ShieldAlert, Cpu, RefreshCw
+  Activity, ShieldAlert, Cpu
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { kpiStats as fallbackKpis, funnelData as fallbackFunnel, systemHealth as fallbackHealth } from '../../data/mockData';
 import { cn } from '../../lib/utils';
-import { useApi, seedDemoData } from '../../lib/api';
+import { useApi } from '../../lib/api';
 
 export function CommandCenter() {
   const { data, loading, error } = useApi<{ kpis: any, funnel: any[] }>('dashboard', {
@@ -32,10 +32,6 @@ export function CommandCenter() {
     { label: 'Security Alerts', value: kpis.securityAlerts, icon: ShieldAlert, trend: '-2%', alert: true },
   ];
 
-  const handleSeed = async () => {
-    await seedDemoData();
-    window.location.reload();
-  };
 
   return (
     <div className="space-y-6">
@@ -45,10 +41,6 @@ export function CommandCenter() {
           <p className="text-slate-500 mt-1">Statewide ecosystem health, AI performance, and operational governance.</p>
         </div>
         <div className="flex items-center space-x-3">
-          <button onClick={handleSeed} className="flex items-center px-3 py-1 bg-indigo-50 text-indigo-700 text-sm font-medium rounded-full border border-indigo-200 hover:bg-indigo-100 transition-colors">
-            <RefreshCw className="w-3 h-3 mr-2" />
-            Seed Demo Data
-          </button>
           <div className="text-sm font-medium px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full border border-emerald-200">
             Uptime: {kpis.platformUptime || '99.9%'}
           </div>
