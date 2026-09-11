@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { AnyZodObject, ZodError } from 'zod';
+import { ZodSchema, ZodError } from 'zod';
 
-export const validateRequest = (schema: AnyZodObject) => {
+export const validateRequest = (schema: ZodSchema) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.parseAsync({
@@ -15,7 +15,7 @@ export const validateRequest = (schema: AnyZodObject) => {
         return res.status(400).json({
           success: false,
           error: 'Validation failed',
-          details: error.errors,
+          details: error.issues,
         });
       }
       return res.status(500).json({ success: false, error: 'Internal server error' });
@@ -23,17 +23,17 @@ export const validateRequest = (schema: AnyZodObject) => {
   };
 };
 
-export const validateQuery = (schema: AnyZodObject) => {
+export const validateQuery = (schema: ZodSchema) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      req.query = await schema.parseAsync(req.query);
+      req.query = (await schema.parseAsync(req.query)) as any;
       return next();
     } catch (error) {
       if (error instanceof ZodError) {
         return res.status(400).json({
           success: false,
           error: 'Invalid query parameters',
-          details: error.errors,
+          details: error.issues,
         });
       }
       return res.status(500).json({ success: false, error: 'Internal server error' });

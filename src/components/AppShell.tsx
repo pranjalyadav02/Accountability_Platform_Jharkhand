@@ -10,6 +10,7 @@ import { AIGovernance } from './views/AIGovernance';
 import { AuditTrail } from './views/AuditTrail';
 import { SystemHealth } from './views/SystemHealth';
 import { UserManagement } from './views/UserManagement';
+import { handlePortalLogout } from '../utils/navigation';
 
 export type TabType = 'command' | 'users' | 'ai' | 'workflow' | 'geography' | 'infrastructure' | 'security' | 'audit' | 'data' | 'health';
 
@@ -95,7 +96,11 @@ export function AppShell() {
             </span>
             <span className="text-slate-500">v2.1.0</span>
           </div>
-          <button className="w-full flex items-center justify-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded transition-colors">
+          <button
+            onClick={handlePortalLogout}
+            className="w-full flex items-center justify-center px-4 py-2 bg-slate-800 hover:bg-rose-950/60 border border-slate-700 hover:border-rose-800 text-white hover:text-rose-200 rounded transition-colors cursor-pointer"
+            title="Sign Out to JanaSamadhan Login Portal"
+          >
             <LogOut className="w-4 h-4 mr-2" />
             Sign Out
           </button>
